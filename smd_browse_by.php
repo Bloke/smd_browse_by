@@ -207,7 +207,7 @@ function smd_browse_dropdown($type, $evt) {
 }
 
 // Frankensteined from the core's selectInput() and treeSelectInput()
-function smd_browse_select_input($select_name = '', $array = '', $value = '', $blank_first, $onchange, $select_id = '', $truncate = 0) {
+function smd_browse_select_input($select_name = '', $array = '', $value = '', $blank_first = false, $onchange = false, $select_id = '', $truncate = 0) {
 	$out = array();
 	$selected = false;
 	$level = 0;
