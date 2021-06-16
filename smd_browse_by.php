@@ -264,10 +264,6 @@ h1. smd_browse_by
 
 Browse your articles/images/files/links via a quick dropdown menu of category (or in the case of articles: section as well). Just install, activate, done.
 
-h2. Author / credits
-
-Written by "Stef Dawson":https://stefdawson.com/contact. Original plugin by Steve Lam.
-
 h2. Installation / uninstallation
 
 p(important). Requires TXP 4.4.1+
@@ -344,6 +340,10 @@ function my_custom_browser($evt, $stp, $data, $rs, $val) {
    //    that will be what is displayed in place of the
    //    default select list
 }
+
+h2. Author / credits
+
+Written by "Stef Dawson":https://stefdawson.com/contact. Original plugin by Steve Lam.
 # --- END PLUGIN HELP ---
 -->
 <?php
