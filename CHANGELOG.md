@@ -2,6 +2,7 @@
 
 ## 0.1.2 - 2021-06-16
 
+* For Txp 4.6+
 * PHP 8 compatibility (thanks, GugUser).
 
 ## 0.1.1 - 2012-03-04

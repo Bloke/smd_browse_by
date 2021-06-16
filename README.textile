@@ -4,7 +4,7 @@ Browse your articles/images/files/links via a quick dropdown menu of category (o
 
 h2. Installation / uninstallation
 
-p(important). Requires TXP 4.4.1+
+p. Requires TXP 4.6.0+
 
 Download the plugin from either "GitHub":https://github.com/Bloke/smd_browse_by, or the "software page":https://stefdawson.com/sw, paste the code into the Textpattern _Admin>Plugins_ pane, install and enable the plugin.
 

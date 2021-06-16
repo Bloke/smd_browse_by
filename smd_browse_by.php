@@ -71,16 +71,18 @@ if (!defined('txpinterface'))
         @include_once('zem_tpl.php');
 
 # --- BEGIN PLUGIN CODE ---
-if (@txpinterface == 'admin') {
+if (txpinterface === 'admin') {
 	register_callback('smd_browse_by_image', 'image');
 	register_callback('smd_browse_by_article', 'list');
 	register_callback('smd_browse_by_file', 'file');
 	register_callback('smd_browse_by_link', 'link');
 }
 
-function smd_browse_by_image($evt, $stp) {
-	if ($stp == '' || $stp == 'image_list') {
+function smd_browse_by_image($evt, $stp)
+{
+	if (in_array($stp, array('', 'image_list', 'image_save'))) {
 		$showit = do_list(get_pref('smd_browse_by', 'SMD_ALL'));
+
 		if (in_array('SMD_ALL', $showit) || in_array('image', $showit)) {
 			$smd_browse_by_form = form(smd_browse_dropdown('image', $evt), '', '', 'get');
 			smd_browse_by_js($smd_browse_by_form);
@@ -88,7 +90,8 @@ function smd_browse_by_image($evt, $stp) {
 	}
 }
 
-function smd_browse_by_article($evt, $stp) {
+function smd_browse_by_article($evt, $stp)
+{
 	$showit = do_list(get_pref('smd_browse_by', 'SMD_ALL'));
 	$showcat = (in_array('SMD_ALL', $showit) || in_array('article', $showit) || in_array('article_cat', $showit));
 	$showsec = (in_array('SMD_ALL', $showit) || in_array('article', $showit) || in_array('article_sec', $showit));
@@ -101,9 +104,11 @@ function smd_browse_by_article($evt, $stp) {
 	}
 }
 
-function smd_browse_by_file($evt, $stp) {
-	if ($stp == '' || $stp == 'file_list') {
+function smd_browse_by_file($evt, $stp)
+{
+	if (in_array($stp, array('', 'file_list', 'file_save'))) {
 		$showit = do_list(get_pref('smd_browse_by', 'SMD_ALL'));
+
 		if (in_array('SMD_ALL', $showit) || in_array('file', $showit)) {
 			$smd_browse_by_form = form(smd_browse_dropdown('file', $evt), '', '', 'get');
 			smd_browse_by_js($smd_browse_by_form);
@@ -111,9 +116,11 @@ function smd_browse_by_file($evt, $stp) {
 	}
 }
 
-function smd_browse_by_link($evt, $stp) {
-	if ($stp == '' || $stp == 'link_list') {
+function smd_browse_by_link($evt, $stp)
+{
+	if (in_array($stp, array('', 'link_list', 'link_save'))) {
 		$showit = do_list(get_pref('smd_browse_by', 'SMD_ALL'));
+
 		if (in_array('SMD_ALL', $showit) || in_array('link', $showit)) {
 			$smd_browse_by_form = form(smd_browse_dropdown('link', $evt), '', '', 'get');
 			smd_browse_by_js($smd_browse_by_form);
@@ -122,13 +129,14 @@ function smd_browse_by_link($evt, $stp) {
 }
 
 // Common js to place each 'browse by' above each area's search form
-function smd_browse_by_js($content) {
+function smd_browse_by_js($content)
+{
 	$out = doSlash($content);
 	$js = <<<EOJS
 <script type="text/javascript">
 /* <![CDATA[ */
 	jQuery(document).ready(function() {
-		jQuery(".search-form").before('<div class="smd_browse_by">{$out}</div>');
+		jQuery(".txp-search").after('<div class="smd_browse_by">{$out}</div>');
 	});
 /* ]]> */
 </script>
@@ -136,7 +144,8 @@ EOJS;
 	echo $js;
 }
 
-function smd_browse_dropdown($type, $evt) {
+function smd_browse_dropdown($type, $evt)
+{
 	$browsable = array(
 		'article_cat' => array(
 			'by'    => smd_browse_by_gTxt('by_cat'),
@@ -171,7 +180,7 @@ function smd_browse_dropdown($type, $evt) {
 			'by'    => smd_browse_by_gTxt('by_cat'),
 			'table' => 'txp_category',
 			'where' => "type = 'link' AND name != 'root'",
-			'step'  => 'link_edit',
+			'step'  => 'link_list',
 			'meth'  => 'category',
 		),
 	);
@@ -183,16 +192,19 @@ function smd_browse_dropdown($type, $evt) {
 		if ($entry['meth'] == 'section') {
 			$sorder = ($entry['sort']) ? ' ORDER BY '.$entry['sort'] : '';
 			$section_cat = safe_rows('name, title', $entry['table'], $entry['where'].$sorder);
+
 			foreach ($section_cat as $row) {
 				$sel[] = array('name' => $row['name'], 'title' => $row['title']);
 			}
-		} else if ($entry['meth'] == 'category' || $entry['meth'] == 'categories') {
+		} elseif ($entry['meth'] == 'category' || $entry['meth'] == 'categories') {
 			$thistype = str_replace('_cat', '', $type);
 			$sel = getTree('root', $thistype, '1=1', $entry['table']);
 		}
+
 		if ($sel) {
 			$use_go = get_pref('smd_browse_by_go_button', 0);
 			$val = gps('crit');
+
 			return
 				graf($entry['by']
 				. pluggable_ui('smd_browse_by_ui', $type, smd_browse_select_input('crit', $sel, $val, true, (($use_go) ? false : true)), $sel,  $val)
@@ -203,11 +215,13 @@ function smd_browse_dropdown($type, $evt) {
 				);
 		}
 	}
+
 	return false;
 }
 
-// Frankensteined from the core's selectInput() and treeSelectInput()
-function smd_browse_select_input($select_name = '', $array = '', $value = '', $blank_first = false, $onchange = false, $select_id = '', $truncate = 0) {
+// Frankensteined from the core's selectInput() and treeSelectInput().
+function smd_browse_select_input($select_name = '', $array = '', $value = '', $blank_first = false, $onchange = false, $select_id = '', $truncate = 0)
+{
 	$out = array();
 	$selected = false;
 	$level = 0;
@@ -247,12 +261,14 @@ function smd_browse_select_input($select_name = '', $array = '', $value = '', $b
 		n.'</select>';
 }
 
-// Plugin-specific replacement strings - localise as required
-function smd_browse_by_gTxt($what, $atts = array()) {
+// Plugin-specific replacement strings - localise as required.
+function smd_browse_by_gTxt($what, $atts = array())
+{
 	$lang = array(
 		'by_cat' => 'Browse by Category',
 		'by_sec' => 'Browse by Section',
 	);
+
 	return strtr($lang[$what], $atts);
 }
 # --- END PLUGIN CODE ---
@@ -266,7 +282,7 @@ Browse your articles/images/files/links via a quick dropdown menu of category (o
 
 h2. Installation / uninstallation
 
-p(important). Requires TXP 4.4.1+
+p(important). Requires TXP 4.6.0+
 
 Download the plugin from either "GitHub":https://github.com/Bloke/smd_browse_by, or the "software page":https://stefdawson.com/sw, paste the code into the Textpattern _Admin>Plugins_ pane, install and enable the plugin.
 
