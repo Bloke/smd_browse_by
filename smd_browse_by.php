@@ -17,10 +17,10 @@ $plugin['name'] = 'smd_browse_by';
 // 1 = Plugin help is in raw HTML.  Not recommended.
 # $plugin['allow_html_help'] = 1;
 
-$plugin['version'] = '0.1.1';
+$plugin['version'] = '0.1.2';
 $plugin['author'] = 'Stef Dawson';
 $plugin['author_uri'] = 'https://stefdawson.com/';
-$plugin['description'] = 'Browse by Category (+article Section) in admin side';
+$plugin['description'] = 'Browse by Category (+article Section) in admin interface';
 
 // Plugin load order:
 // The default value of 5 would fit most plugins, while for instance comment
@@ -259,33 +259,7 @@ function smd_browse_by_gTxt($what, $atts = array()) {
 if (0) {
 ?>
 <!--
-# --- BEGIN PLUGIN CSS ---
-<style type="text/css">
-#smd_help { line-height:1.5 ;}
-#smd_help code { font-weight:bold; font: 105%/130% "Courier New", courier, monospace; background-color: #f0e68c; color:#333; }
-#smd_help code.block { font-weight:normal; border:1px dotted #999; display:block; margin:10px 10px 20px; padding:10px; }
-#smd_help h1 { font: 20px Georgia, sans-serif; margin: 0; text-align: center; }
-#smd_help h2 { border-bottom: 1px solid black; padding:10px 0 0; font: 17px Georgia, sans-serif; }
-#smd_help h3 { font: bold 12px Arial, sans-serif; letter-spacing: 1px; margin: 10px 0 0; text-decoration:underline; }
-#smd_help h4 { font: bold 11px Arial, sans-serif; letter-spacing: 1px; margin: 10px 0 0; text-transform: uppercase; }
-#smd_help .atnm { font-weight:bold; }
-#smd_help .mand { background:#eee; border:1px dotted #999; }
-#smd_help table { width:90%; text-align:center; padding-bottom:1em; border-collapse:collapse; }
-#smd_help td, #smd_help th { border:1px solid #999; padding:.5em; }
-#smd_help ul { list-style-type:square; }
-#smd_help .important { color:red; }
-#smd_help li { margin:5px 20px 5px 30px; }
-#smd_help .break { margin-top:5px; }
-#smd_help dl dd { margin:2px 15px; }
-#smd_help dl dd:before { content: "\21d2\00a0"; }
-#smd_help dl dd dl { padding: 0 15px; }
-</style>
-# --- END PLUGIN CSS ---
--->
-<!--
 # --- BEGIN PLUGIN HELP ---
-notextile. <div id="smd_help">
-
 h1. smd_browse_by
 
 Browse your articles/images/files/links via a quick dropdown menu of category (or in the case of articles: section as well). Just install, activate, done.
@@ -370,13 +344,6 @@ function my_custom_browser($evt, $stp, $data, $rs, $val) {
    //    that will be what is displayed in place of the
    //    default select list
 }
-
-h2. Changelog
-
-* 31 Aug 2011 | 0.1.0 | Initial release
-* 04 Mar 2012 | 0.1.1 | Added hidden pref to control which dropdowns to use ; category tree now displayed (thanks pieman) ; pluggable_ui() implemented so other plugins can alter the lists (thanks tye) ; more consistent layout (thanks philwareham) ; sections ordered by title
-
-notextile. </div>
 # --- END PLUGIN HELP ---
 -->
 <?php

@@ -1,0 +1,84 @@
+h1. smd_browse_by
+
+Browse your articles/images/files/links via a quick dropdown menu of category (or in the case of articles: section as well). Just install, activate, done.
+
+h2. Author / credits
+
+Written by "Stef Dawson":https://stefdawson.com/contact. Original plugin by Steve Lam.
+
+h2. Installation / uninstallation
+
+p(important). Requires TXP 4.4.1+
+
+Download the plugin from either "GitHub":https://github.com/Bloke/smd_browse_by, or the "software page":https://stefdawson.com/sw, paste the code into the Textpattern _Admin>Plugins_ pane, install and enable the plugin.
+
+To uninstall the plugin, delete from the _Admin>Plugins_ page.
+
+Visit the "forum thread":https://forum.textpattern.com/viewtopic.php?id=36784 for more info or to report on the success or otherwise of the plugin.
+
+h2. Configuration
+
+The plugin can be controlled with a few hidden preference values (the smd_prefalizer plugin can help here). Any prefs you create should have the following items set, in addition to the preference-specific name and value given later:
+
+* Visibility: *Hidden*
+* Event: *smd_browse*
+* User: _your login name_ if you wish the preference to only apply to your login, or leave it empty to apply it for all users
+
+The preferences are:
+
+h3. Browse using
+
+By default you can browse by category on all main content types and additionally by section with articles. If you wish to only offer browsing on certain tabs, set this preference. Comma-separate any of the following values to build the interface to your choosing:
+
+* Name: *smd_browse_by*
+* Value:
+** _empty_ : none (!) : remove all browsable lists added by the plugin
+** *SMD_ALL* : browse on every tab -- this has the same effect as completely removing the preference value
+** *article*: browse by category and section lists on the Articles tab
+** *article_cat*: browse by category on the Articles tab
+** *article_sec*: browse by section on the Articles tab
+** *image*: browse by category on the Images tab
+** *file*: browse by category on the Files tab
+** *link*: browse by category on the Links tab
+
+h3. Go button
+
+By default the select lists submit automatically when the entry is changed. If you wish to add a 'Go' button next to the lists, set this preference:
+
+* Name: *smd_browse_by_go_button*
+* Value:
+** 0 (auto-submit)
+** 1 (Go button)
+
+h2. API
+
+If you wish to alter the output of any of the lists that appear on the screen you may do so by registering a callback to be notified when one or all of the select lists are displayed. Here are the relevant events and steps you can use:
+
+* Event: @smd_browse_by_ui@
+* Step: call your plugin at the following times:
+** _empty_ : all select lists
+** @article_cat@: when the Article category list is displayed
+** @article_sec@: when the Article section list is displayed
+** @image@: when the Image category list is displayed
+** @file@: when the File category list is displayed
+** @link@: when the Link category list is displayed
+
+An example:
+
+bc.. if (txpinterface === 'admin') {
+   register_callback('my_custom_browser', 'smd_browse_by_ui', 'image');
+}
+
+function my_custom_browser($evt, $stp, $data, $rs, $val) {
+   // $evt is always 'smd_browse_by_ui'
+   // $stp is the current step
+   //    (article_cat, article_sec, image, file, or link)
+   // $data holds the fully rendered default select list HTML
+   //    so you can search/replace/manipulate it
+   // $rs is the raw array containing the list of items
+   //    so you can iterate over them
+   // $val is the currently chosen value from the list
+   // if you return anything from this function,
+   //    that will be what is displayed in place of the
+   //    default select list
+}

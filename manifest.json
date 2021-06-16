@@ -1,0 +1,11 @@
+{
+  "name": "smd_browse_by",
+  "description": "Browse by Category (+article Section) in admin interface",
+  "version": "0.1.2",
+  "type": 3,
+  "author": "Stef Dawson",
+  "author_uri": "https://stefdawson.com/",
+  "order": 5,
+  "flags": 0,
+  "help": {"file" : ["./README.textile"]}
+}

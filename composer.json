@@ -1,0 +1,16 @@
+{
+  "name": "bloke/smd_browse_by",
+  "description": "Browse by Category (+article Section) in admin interface",
+  "keywords": ["textpattern", "plugin", "category", "browse", "article", "image", "file", "link"],
+  "homepage": "https://github.com/bloke/smd_browse_by",
+  "license": "GPL-2.0",
+  "type": "textpattern-plugin",
+  "support": {
+    "issues": "https://github.com/bloke/smd_browse_by/issues",
+    "source": "https://github.com/bloke/smd_browse_by"
+  },
+  "require": {
+    "textpattern/lock": ">=4.4.1",
+    "textpattern/installer": "*"
+  }
+}
